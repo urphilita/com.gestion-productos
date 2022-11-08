@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeLeaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Control de Productos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">Control de Productos</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" href="/nuevo">Agregar Producto</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<br/>
+   <div class="container text-center">
+    <form class="row row-cols-lg-auto g-3 align-items-center" th:action="@{/}">
+        <div class="col-12">
+            <div class="form-group mb-2">
+                <label>Filtrar : </label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-group mx-sm-3 mb-2">
+                <input type="text" name="palabraClave" class="form-control" id="palabraClave" th:value="${palabraClave}" placeholder="Digite el valor a buscar" required>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-info mb-2" value="Buscar">
+        &nbsp;&nbsp;
+        <input type="button" class="btn btn-secondary mb-2" value="Limpiar" onclick="limpiarCampos()">
+
+    </form>
+       <br/>
+   <table class="table">
+       <thead class="table-dark">
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Marca</th>
+            <th scope="col">Hecho en</th>
+            <th scope="col">Precio</th>
+            <th scope="col">Acciones</th>
+        </tr>
+       </thead>
+       <tbody>
+        <tr th:each="producto : ${listaProductos}">
+            <td th:text="${producto.id}"></td>
+            <td th:text="${producto.nombre}"></td>
+            <td th:text="${producto.marca}"></td>
+            <td th:text="${producto.hechoEn}"></td>
+            <td th:text="${producto.precio}"></td>
+            <td>
+                <a class="btn btn-primary" th:href="@{'/editar/' + ${producto.id}}">Editar</a>
+                &nbsp;
+                <a class="btn btn-danger" th:href="@{'/eliminar/' + ${producto.id}}">Eliminar</a>
+            </td>
+
+        </tr>
+       </tbody>
+   </table>
+   </div>
+    <script type="text/javascript">
+        function limpiarCampos(){
+            window.location='/';
+        }
+    </script>
+</body>
+</html>
